@@ -1,7 +1,7 @@
 package entities;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Issue")
@@ -20,15 +20,15 @@ public class Issue {
 	private Member member;
 
 	@Column(name = "Issue_date")
-	private Date issueDate;
+	private LocalDate issueDate;
 
 	@Column(name = "Due_date")
-	private Date dueDate;
+	private LocalDate dueDate;
 
 	@Column(name = "Return_date")
-	private Date returnDate;
+	private LocalDate returnDate;
 
-	public Issue(int id, Book book, Member member, Date issueDate, Date dueDate, Date returnDate) {
+	public Issue(int id, Book book, Member member, LocalDate issueDate, LocalDate dueDate, LocalDate returnDate) {
 		super();
 		this.id = id;
 		this.book = book;
@@ -40,7 +40,6 @@ public class Issue {
 
 	public Issue() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
@@ -67,27 +66,27 @@ public class Issue {
 		this.member = member;
 	}
 
-	public Date getIssueDate() {
+	public LocalDate getIssueDate() {
 		return issueDate;
 	}
 
-	public void setIssueDate(Date issueDate) {
+	public void setIssueDate(LocalDate issueDate) {
 		this.issueDate = issueDate;
 	}
 
-	public Date getDueDate() {
+	public LocalDate getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Date getReturnDate() {
+	public LocalDate getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(Date returnDate) {
+	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
 	}
 }

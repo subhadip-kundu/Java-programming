@@ -6,7 +6,8 @@ import entities.Member;
 import entities.MemberType;
 import entities.Publisher;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class LibraryManagementSystem {
 	public static void main(String[] args) {
@@ -53,9 +54,12 @@ public class LibraryManagementSystem {
 		int bookId = scanner.nextInt();
 		scanner.nextLine(); // Consume newline
 
-		// Get issue date and due date
-		Date issueDate = new Date();
-		Date dueDate = new Date(issueDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Due date after 7 days
+		// Get issue date
+		LocalDate issueDate = LocalDate.now();
+
+		// Calculate due date using Period
+		Period oneWeek = Period.ofDays(7);
+		LocalDate dueDate = issueDate.plus(oneWeek);
 
 		LibraryDAO.issueBook(memberId, bookId, issueDate, dueDate);
 	}
@@ -66,7 +70,7 @@ public class LibraryManagementSystem {
 		scanner.nextLine(); // Consume newline
 
 		// Get return date
-		Date returnDate = new Date();
+		LocalDate returnDate = LocalDate.now();
 
 		LibraryDAO.returnBook(issueId, returnDate);
 	}
@@ -78,7 +82,7 @@ public class LibraryManagementSystem {
 		String memberType = scanner.nextLine();
 		System.out.print("Enter member address: ");
 		String address = scanner.nextLine();
-		
+
 		// Create member object
 		Member member = new Member();
 		member.setName(name);

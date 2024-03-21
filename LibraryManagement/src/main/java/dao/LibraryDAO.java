@@ -13,7 +13,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import jakarta.persistence.criteria.CriteriaBuilder;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class LibraryDAO {
 	private static final SessionFactory sessionFactory;
@@ -29,14 +29,14 @@ public class LibraryDAO {
 		}
 	}
 
-	public static void issueBook(int memberId, int bookId, Date issueDate, Date dueDate) {
+	public static void issueBook(int memberId, int bookId, LocalDate issueDate, LocalDate dueDate) {
 		try (Session session = sessionFactory.openSession()) {
 			Transaction transaction = session.beginTransaction();
 
 			Book book = session.get(Book.class, bookId);
 			Member member = session.get(Member.class, memberId);
-
-			if (book.isAvailable() == "YES") {
+			
+			if (book.isAvailable().equals("YES")) {
 				Issue issue = new Issue();
 				issue.setBook(book);
 				issue.setMember(member);
@@ -58,7 +58,7 @@ public class LibraryDAO {
 		}
 	}
 
-	public static void returnBook(int issueId, Date returnDate) {
+	public static void returnBook(int issueId, LocalDate returnDate) {
 		try (Session session = sessionFactory.openSession()) {
 			Transaction transaction = session.beginTransaction();
 
