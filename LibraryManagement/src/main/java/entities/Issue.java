@@ -28,7 +28,11 @@ public class Issue {
 	@Column(name = "Return_date")
 	private LocalDate returnDate;
 
-	public Issue(int id, Book book, Member member, LocalDate issueDate, LocalDate dueDate, LocalDate returnDate) {
+	@Column(name = "Fine_amount")
+	private double fine;
+
+	public Issue(int id, Book book, Member member, LocalDate issueDate, LocalDate dueDate, LocalDate returnDate,
+			double fine) {
 		super();
 		this.id = id;
 		this.book = book;
@@ -36,6 +40,7 @@ public class Issue {
 		this.issueDate = issueDate;
 		this.dueDate = dueDate;
 		this.returnDate = returnDate;
+		this.fine = fine;
 	}
 
 	public Issue() {
@@ -88,5 +93,13 @@ public class Issue {
 
 	public void setReturnDate(LocalDate returnDate) {
 		this.returnDate = returnDate;
+	}
+
+	public double getFine() {
+		return fine;
+	}
+
+	public void setFine(double fine) {
+		this.fine = fine;
 	}
 }

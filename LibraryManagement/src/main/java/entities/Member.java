@@ -22,6 +22,9 @@ public class Member {
 	@Column(name = "Address")
 	private String address;
 
+	@Column(name = "Contact_details")
+	private String contact;
+
 	@Column(name = "Expiry_date")
 	private LocalDate expiryDate;
 
@@ -29,12 +32,13 @@ public class Member {
 		super();
 	}
 
-	public Member(String name, MemberType memberType, String address, LocalDate expiryDate) {
+	public Member(String name, MemberType memberType, String address, LocalDate expiryDate, String contact) {
 		super();
 		this.name = name;
 		this.memberType = memberType;
 		this.address = address;
 		this.expiryDate = expiryDate;
+		this.contact = contact;
 	}
 
 	public int getId() {
@@ -79,11 +83,14 @@ public class Member {
 		LocalDate expireOn = joinDate.plus(oneYear);
 		this.expiryDate = expireOn;
 	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 	
 
-	@Override
-	public String toString() {
-		return "Member{" + "id=" + id + ", name='" + name + '\'' + ", memberType=" + memberType + ", address='"
-				+ address + '\'' + ", expiryDate=" + expiryDate + '}';
-	}
 }

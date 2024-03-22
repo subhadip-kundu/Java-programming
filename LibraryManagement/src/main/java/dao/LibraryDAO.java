@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import entities.Author;
 import entities.Book;
 import entities.Issue;
 import entities.Member;
@@ -29,19 +30,20 @@ public class LibraryDAO {
 		}
 	}
 
-	public static void issueBook(int memberId, int bookId, LocalDate issueDate, LocalDate dueDate) {
+	public static void issueBook(int memberId, int bookId, LocalDate issueDate, LocalDate dueDate,double fine) {
 		try (Session session = sessionFactory.openSession()) {
 			Transaction transaction = session.beginTransaction();
 
 			Book book = session.get(Book.class, bookId);
 			Member member = session.get(Member.class, memberId);
-			
+
 			if (book.isAvailable().equals("YES")) {
 				Issue issue = new Issue();
 				issue.setBook(book);
 				issue.setMember(member);
 				issue.setIssueDate(issueDate);
 				issue.setDueDate(dueDate);
+				issue.setFine(fine);
 
 				session.persist(issue);
 
@@ -98,11 +100,16 @@ public class LibraryDAO {
 		}
 	}
 
-	public static void addBook(Book book) {
+	public static void addBook(Book book, Author author) {
 		try (Session session = sessionFactory.openSession()) {
 			Transaction transaction = session.beginTransaction();
-			session.persist(book);
+
+			session.persist(author); // Save author information
+
+			session.persist(book); // Save book information
+
 			transaction.commit();
+			System.out.println("Book added successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -121,4 +128,5 @@ public class LibraryDAO {
 			return null;
 		}
 	}
+	
 }
