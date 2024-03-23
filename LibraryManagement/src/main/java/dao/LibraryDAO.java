@@ -18,6 +18,11 @@ import java.time.LocalDate;
 
 public class LibraryDAO {
 	private static final SessionFactory sessionFactory;
+	
+	private static void handleException(Exception e) {
+        System.err.println("An error occurred: " + e.getMessage());
+        e.printStackTrace();
+    }
 
 	static {
 		try {
@@ -56,7 +61,7 @@ public class LibraryDAO {
 				System.out.println("Book is not available for issuing.");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			handleException(e);
 		}
 	}
 
@@ -76,7 +81,7 @@ public class LibraryDAO {
 			transaction.commit();
 			System.out.println("Book returned successfully.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			handleException(e);
 		}
 	}
 
@@ -86,7 +91,7 @@ public class LibraryDAO {
 			session.persist(member);
 			transaction.commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			handleException(e);
 		}
 	}
 
@@ -96,7 +101,7 @@ public class LibraryDAO {
 			session.persist(publisher);
 			transaction.commit();
 		} catch (Exception e) {
-			e.printStackTrace();
+			handleException(e);
 		}
 	}
 
@@ -111,7 +116,7 @@ public class LibraryDAO {
 			transaction.commit();
 			System.out.println("Book added successfully.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			handleException(e);
 		}
 	}
 
@@ -123,8 +128,7 @@ public class LibraryDAO {
 			criteriaQuery.select(root).where(builder.equal(root.get("id"), publisherId));
 			return session.createQuery(criteriaQuery).uniqueResult();
 		} catch (Exception e) {
-			System.err.println("Error occurred while fetching publisher by ID: " + e.getMessage());
-			e.printStackTrace();
+			handleException(e);
 			return null;
 		}
 	}

@@ -57,33 +57,33 @@ public class LibraryManagementSystem {
 		System.out.print("Enter book ID: ");
 		int bookId = scanner.nextInt();
 		scanner.nextLine();
-		double fine =0;
-		
+		double fine = 0;
+
 		// Get issue date
 		LocalDate issueDate = LocalDate.now();
 
 		// Calculate due date using Period
 		Period oneWeek = Period.ofDays(7);
 		LocalDate dueDate = issueDate.plus(oneWeek);
-		
+
 		// Calculate fine if overdue
-	    fine = calculateFine(dueDate);
+		fine = calculateFine(dueDate);
 
-		LibraryDAO.issueBook(memberId, bookId, issueDate, dueDate,fine);
+		LibraryDAO.issueBook(memberId, bookId, issueDate, dueDate, fine);
 	}
-	
+
 	private static double calculateFine(LocalDate dueDate) {
-	    // Calculate the number of days overdue
-	    LocalDate currentDate = LocalDate.now();
-	    long daysOverdue = ChronoUnit.DAYS.between(dueDate, currentDate);
+		// Calculate the number of days overdue
+		LocalDate currentDate = LocalDate.now();
+		long daysOverdue = ChronoUnit.DAYS.between(dueDate, currentDate);
 
-	    // If the book is not overdue, fine is 0
-	    if (daysOverdue <= 0) {
-	        return 0;
-	    }
+		// If the book is not overdue, fine is 0
+		if (daysOverdue <= 0) {
+			return 0;
+		}
 
-	    // Fine is Rs. 1 for each day overdue
-	    return daysOverdue;
+		// Fine is Rs. 1 for each day overdue
+		return daysOverdue;
 	}
 
 	private static void returnBook(Scanner scanner) {
@@ -97,6 +97,7 @@ public class LibraryManagementSystem {
 		LibraryDAO.returnBook(issueId, returnDate);
 	}
 
+	//Add member
 	private static void addMember(Scanner scanner) {
 		System.out.print("Enter member name: ");
 		String name = scanner.nextLine();
@@ -104,8 +105,18 @@ public class LibraryManagementSystem {
 		String memberType = scanner.nextLine();
 		System.out.print("Enter member address: ");
 		String address = scanner.nextLine();
-		System.out.print("Enter MailId/PhoneNo: ");
-		String contact = scanner.nextLine();
+
+		// Validating contact information
+		String contact;
+		while (true) {
+			System.out.print("Enter MailId/PhoneNo: ");
+			contact = scanner.nextLine();
+			if (isValidContact(contact)) {
+				break;
+			} else {
+				System.out.println("Invalid contact information. Please enter a valid contact.");
+			}
+		}
 
 		// Create member object
 		Member member = new Member();
@@ -116,6 +127,19 @@ public class LibraryManagementSystem {
 		member.setContact(contact);
 		LibraryDAO.addMember(member);
 		System.out.println("Member added successfully.");
+	}
+
+	// Validation method for contact information
+	private static boolean isValidContact(String contact) {
+		// Check if the contact is numeric and has exactly 10 digits
+		if (contact.matches("[0-9]+") && contact.length() == 10) {
+			return true;
+		}
+		// Check if the contact is alphanumeric and contains @ symbol
+		if (contact.matches("[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+")) {
+			return true;
+		}
+		return false;
 	}
 
 	private static void addPublisher(Scanner scanner) {
@@ -165,5 +189,5 @@ public class LibraryManagementSystem {
 
 		LibraryDAO.addBook(book, author);
 	}
-	
+
 }
