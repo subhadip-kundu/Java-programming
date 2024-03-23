@@ -76,6 +76,11 @@ library-management-system/
 └── README.md
 ```
 
+
+## Database EER Diagram
+![image](https://github.com/subhadip-kundu/Java-programming/assets/124190254/82e6c8d2-1715-4d5f-b52b-069319bf1093)
+
+
 ## Dependencies
 - Hibernate: Object-relational mapping framework for Java.
 - MySQL Connector/J: JDBC driver for MySQL database connectivity.
