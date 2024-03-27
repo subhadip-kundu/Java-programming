@@ -14,6 +14,11 @@ public class User {
     private String city;
     private String status;
 
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", city=" + city + ", status=" + status + "]";
+    }
+
     public int getId() {
         return id;
     }

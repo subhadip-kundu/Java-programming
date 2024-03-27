@@ -3,6 +3,7 @@ package com.startingjpa.usejpa;
 import org.springframework.context.ApplicationContext;
 
 import com.startingjpa.usejpa.entities.User;
+import com.startingjpa.usejpa.dao.FetchAsRequired;
 import com.startingjpa.usejpa.dao.UserRepository;
 
 import java.util.Iterator;
@@ -19,6 +20,9 @@ public class UsejpaApplication {
 
 		ApplicationContext context = SpringApplication.run(UsejpaApplication.class, args);
 		UserRepository userRepository = context.getBean(UserRepository.class);
+		FetchAsRequired fetchAsRequired = context.getBean(FetchAsRequired.class);
+		fetchAsRequired.fetchUsers();
+
 		User user = new User();
 		user.setName("Shilpa Dutta");
 		user.setCity("Bankura");
@@ -28,7 +32,7 @@ public class UsejpaApplication {
 		// Read
 
 		// Fetching the saved user
-		User savedUser = userRepository.findById(user.getId()).orElse(null);
+		User savedUser = userRepository.findById(1).orElse(null);
 
 		/*
 		 * 
@@ -62,7 +66,11 @@ public class UsejpaApplication {
 		userRepository.save(savedUser);
 
 		// Delete
-		userRepository.deleteById(2);
+		userRepository.deleteById(11);
+		System.out.println(user);
 		System.out.println("DELETED");
+
+		
+
 	}
 }
