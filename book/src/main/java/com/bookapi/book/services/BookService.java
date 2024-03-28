@@ -52,4 +52,15 @@ public class BookService {
         return list;
     }
 
+    // Update book
+
+    public void updateBook(Book book, int id) {
+       list = list.stream().map(b -> {
+            if (b.getId() == id) {
+                b.setTitle(book.getTitle());
+                b.setAuthor(book.getAuthor());
+            }
+            return b;
+        }).collect(Collectors.toList());
+    }
 }
