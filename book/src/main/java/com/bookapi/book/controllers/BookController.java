@@ -58,10 +58,10 @@ public class BookController {
 
     // Delete book handler
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable("id") int id) {
+    public ResponseEntity<String> deleteBook(@PathVariable("id") int id) {
         try {
             this.bookService.deleteBook(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok("Deleted Successfully");
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
